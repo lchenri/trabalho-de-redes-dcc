@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71cf041b-f9df-442f-b579-9dd201c9d9e2" name="Changes" comment="Implementação do chat sem criptografia de mensagem.">
+    <list default="true" id="71cf041b-f9df-442f-b579-9dd201c9d9e2" name="Changes" comment="alteracao para websocket.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/redes/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/redes/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/redes/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/redes/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,7 +115,7 @@
       <workItem from="1726708913701" duration="1199000" />
       <workItem from="1727223626969" duration="388000" />
       <workItem from="1727471835084" duration="50000" />
-      <workItem from="1727471901297" duration="3735000" />
+      <workItem from="1727471901297" duration="6774000" />
     </task>
     <task id="LOCAL-00001" summary="Implementação do chat sem criptografia de mensagem.">
       <option name="closed" value="true" />
@@ -126,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727223778437</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="alteracao para websocket.">
+      <option name="closed" value="true" />
+      <created>1727475675175</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727475675175</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +141,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implementação do chat sem criptografia de mensagem." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementação do chat sem criptografia de mensagem." />
+    <MESSAGE value="alteracao para websocket." />
+    <option name="LAST_COMMIT_MESSAGE" value="alteracao para websocket." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -146,22 +154,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/redes/Server.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/redes/Server.java</url>
-          <line>106</line>
+          <line>142</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/redes/Server.java</url>
-          <line>115</line>
+          <line>151</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/redes/Server.java</url>
-          <line>33</line>
+          <line>34</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

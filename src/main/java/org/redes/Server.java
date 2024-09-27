@@ -2,6 +2,7 @@ package org.redes;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
 import java.util.Base64;
@@ -22,7 +23,7 @@ public class Server {
     private static class ClientHandler extends Thread {
         private Socket socket;
         private PrintWriter out;
-        private BufferedReader in;
+        private InputStream in;
         private String userName;
 
         public ClientHandler(Socket socket) {
@@ -31,13 +32,16 @@ public class Server {
 
         public void run() {
             try {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                in = socket.getInputStream();
                 out = new PrintWriter(socket.getOutputStream(), true);
 
                 // Realizar handshake WebSocket
-                String line;
+// Realizar handshake WebSocket
                 StringBuilder request = new StringBuilder();
-                while (!(line = in.readLine()).isEmpty()) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                String line;
+                while ((line = reader.readLine()) != null && !line.isEmpty()) {
                     request.append(line).append("\r\n");
                 }
                 System.out.println("Requisição recebida:\n" + request.toString());
@@ -96,12 +100,44 @@ public class Server {
         }
 
         // Função para ler as mensagens WebSocket
-        private String readWebSocketMessage(BufferedReader in) throws IOException {
-            int length = in.read();  // Lê o primeiro byte para pegar o comprimento da mensagem
-            char[] messageChars = new char[length];
-            in.read(messageChars, 0, length);
-            return new String(messageChars);
+        private String readWebSocketMessage(InputStream in) throws IOException {
+            // Lê o primeiro byte do quadro
+            int firstByte = in.read();
+            if (firstByte == -1) {
+                return null; // Conexão fechada
+            }
+
+            // Lê o segundo byte do quadro
+            int secondByte = in.read();
+            int length = secondByte & 127; // 7 bits menos significativos
+
+            // Determina o comprimento da mensagem
+            if (length == 126) {
+                length = (in.read() << 8) | in.read(); // Lê 2 bytes adicionais para o comprimento
+            } else if (length == 127) {
+                length = 0;
+                for (int i = 0; i < 8; i++) {
+                    length = (length << 8) | in.read(); // Lê 8 bytes adicionais para o comprimento
+                }
+            }
+
+            // Lê a chave da máscara
+            byte[] maskingKey = new byte[4];
+            in.read(maskingKey);
+
+            // Lê os dados da mensagem
+            byte[] messageBytes = new byte[length];
+            in.read(messageBytes);
+
+            // Desmascara a mensagem
+            byte[] decodedBytes = new byte[length];
+            for (int i = 0; i < length; i++) {
+                decodedBytes[i] = (byte) (messageBytes[i] ^ maskingKey[i % 4]);
+            }
+
+            return new String(decodedBytes, StandardCharsets.UTF_8); // Use a codificação UTF-8
         }
+
 
         private void sendToAll(String message) {
             synchronized (clientWriters) {
